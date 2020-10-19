@@ -81,21 +81,65 @@ const questList = [
 //display question (function)
 let questionNum = 0;
 
-function displayQuestion(event) {
-event.preventDefault();
-
-
-//if wrong do this
-
-
-//if right or first question do this
 document.querySelector('#question').innerHTML = questList[questionNum].question;
 document.querySelector('#answer1').innerHTML = questList[questionNum].answer1[0];
 document.querySelector('#answer2').innerHTML = questList[questionNum].answer2[0];
 document.querySelector('#answer3').innerHTML = questList[questionNum].answer3[0];
 document.querySelector('#answer4').innerHTML = questList[questionNum].answer4[0];
-questionNum++;
 
+
+function displayQuestion(event) {
+event.preventDefault();
+//grabs id of button that was clicked on
+var userAnsId = event.target.getAttribute("id");
+console.log(userAnsId);
+
+var userAns;
+
+switch (userAnsId) {
+    case 'answer1': 
+        userAns = questList[questionNum].answer1;
+        break;
+    case 'answer2':
+        userAns = questList[questionNum].answer2;
+        break;
+    case 'answer3':
+        userAns = questList[questionNum].answer3;
+        break;
+    case 'answer4':
+        userAns = questList[questionNum].answer4;
+        break;
+    default:
+        console.log('Issue with userAnsId')
+}
+
+console.log(userAns);
+console.log(userAns[1]);
+
+//if wrong do this
+if (userAns[1] === 'wrong'){
+    console.log("this is working")
+    return;
+}
+
+
+
+//if right do this
+else {
+    if(questionNum < 9) {
+questionNum++;    
+document.querySelector('#question').innerHTML = questList[questionNum].question;
+document.querySelector('#answer1').innerHTML = questList[questionNum].answer1[0];
+document.querySelector('#answer2').innerHTML = questList[questionNum].answer2[0];
+document.querySelector('#answer3').innerHTML = questList[questionNum].answer3[0];
+document.querySelector('#answer4').innerHTML = questList[questionNum].answer4[0];
+    } else {  //questionNum === 9
+    console.log("game over");
+    document.querySelector('#questions').classList.add('display-none')
+    document.querySelector('#enter-initials').classList.remove('display-none')
+
+    } 
+}
 }
 
 const subAns1 = document.querySelector('#answer1');

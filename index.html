@@ -13,15 +13,15 @@
 
     <main>
         <!-- Will show initially, and then display none once quiz starts -->
-        <section id="start-page" class="display-none">
+        <section id="start-page" class="">
             <h1>Coding Quiz!</h1>
             <p>Welcome to this Coding Quiz! You will see 10 multiple choice questions that are based on JavaScript fundamentals!  Keep in mind that you will only have 90 seconds, and you will be penalized 5 seconds for every wrong answer that you click!  At the end, enter in your initials to be added to the scoreboard!  Good luck!</p>
-            <button>Start quiz!</button>
+            <button id="start">Start quiz!</button>
         </section>
 
 
         <!-- Need to display none initially, then display once quiz starts -->
-        <section id="questions" class="">
+        <section id="questions" class="display-none">
             <form>
                 <h1 id="question">Questions</h1>
                 <button id="answer1">Answer1</button><br>
