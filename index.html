@@ -39,19 +39,19 @@
 
         <!-- Display once all questions are answered -->
         <section id="enter-initials" class="display-none">
-            <section id="time-ran-out">
-                <h1>Game Over!</h1>
+            <section id="time-ran-out" class="display-none">
+                <h1>Time is up! Game Over!</h1>
             </section>
-            <section id="finished-quiz">
+            <section id="finished-quiz" class="display-none">
                 <h1>You Finished the Quiz!</h1>
             </section>
             <section>
-                <p>Your score is: </p>
-                <form>
+                <p id="score">Your score is: </p>
+                <form action="highscores.html">
                     <!-- Enter initials and submit -->
-                    <label for="initials">Please enter your name</label>
+                    <label for="initials">Please enter your initials:</label>
                     <input id="initials" type="text">
-                    <button>Submit</button>
+                    <button id="submit-score">Submit</button>
                 </form>
             </section>
         </section>

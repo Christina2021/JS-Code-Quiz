@@ -80,6 +80,7 @@ const questList = [
 
 //display question (function)
 let questionNum = 0;
+let score = 0;
 
 document.querySelector('#question').innerHTML = questList[questionNum].question;
 document.querySelector('#answer1').innerHTML = questList[questionNum].answer1[0];
@@ -117,6 +118,7 @@ console.log(userAns);
 console.log(userAns[1]);
 
 //if wrong do this
+//5 seconds taken off the timer
 if (userAns[1] === 'wrong'){
     console.log("this is working")
     return;
@@ -126,6 +128,7 @@ if (userAns[1] === 'wrong'){
 
 //if right do this
 else {
+    score += 10;
     if(questionNum < 9) {
 questionNum++;    
 document.querySelector('#question').innerHTML = questList[questionNum].question;
@@ -134,12 +137,18 @@ document.querySelector('#answer2').innerHTML = questList[questionNum].answer2[0]
 document.querySelector('#answer3').innerHTML = questList[questionNum].answer3[0];
 document.querySelector('#answer4').innerHTML = questList[questionNum].answer4[0];
     } else {  //questionNum === 9
-    console.log("game over");
-    document.querySelector('#questions').classList.add('display-none')
-    document.querySelector('#enter-initials').classList.remove('display-none')
-
+        gameOver();
     } 
 }
+}
+
+function gameOver(){
+    console.log("game over");
+    document.querySelector('#score').innerHTML = `Your score is ${score} points!`;
+    console.log(score);
+    document.querySelector('#questions').classList.add('display-none')
+    document.querySelector('#enter-initials').classList.remove('display-none')
+    document.querySelector('#finished-quiz').classList.remove('display-none')
 }
 
 const subAns1 = document.querySelector('#answer1');
@@ -151,18 +160,14 @@ subAns2.addEventListener('click',displayQuestion);
 subAns3.addEventListener('click',displayQuestion);
 subAns4.addEventListener('click',displayQuestion);
 
-//reset all variables?
+
+
+// document.querySelector('#submit-score')addEventListener('click',)
+
 
 //timer starts immediately; counts down from 90
 
-//user clicks on radio button, then submits answer
-//submit answer needs to have preventDefault
-
-
-//if wrong, will display wrong and user must try again
-//5 seconds taken off the timer
 //maybe disable radio button so they don't keep clicking on the wrong answer?
-//maybe give a skip question button if they don't want to answer (nothing will be added to the score)
 
 //if correct, will display correct for one second then move to next question
 
@@ -177,3 +182,4 @@ subAns4.addEventListener('click',displayQuestion);
 
 //after entering initials, go to highscores page
 //submit needs to have preventDefault
+
