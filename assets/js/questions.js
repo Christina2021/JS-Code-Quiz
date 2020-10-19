@@ -83,6 +83,10 @@ let questionNum = 0;
 let score = 0;
 let seconds = 90;
 let myTimer;
+let userInit;
+let scoreBoard = [];
+let scoreObj;
+
 
 document.querySelector('#question').innerHTML = questList[questionNum].question;
 document.querySelector('#answer1').innerHTML = questList[questionNum].answer1[0];
@@ -177,12 +181,24 @@ function timerGo() {
         seconds--;
         console.log(seconds);
         document.querySelector('#timer').innerHTML = `Timer: ${seconds}`;
-        if(seconds === 0){
+        if(seconds <= 0){
             gameOver();
         }
     },1000);
 };
 
+
+document.querySelector('#submit-score').addEventListener('click',function(e){
+    e.preventDefault();
+    console.log("does this work");
+    userInit = document.querySelector('#initials').value;
+    console.log(userInit);
+    scoreObj = {name: userInit, score: score};
+    scoreBoard = JSON.parse(localStorage.getItem("currentScoreBoard"));
+    scoreBoard.push(scoreObj);
+    localStorage.setItem("currentScoreBoard",JSON.stringify(scoreBoard));
+    location.href = "highscores.html";
+});
 
 //maybe disable radio button so they don't keep clicking on the wrong answer?
 

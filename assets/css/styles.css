@@ -4,6 +4,13 @@
 
 
 /* need to make a style for wrong answers */
+body {
+    background-color: turquoise;
+}
+
+main {
+    background-color: white;
+}
 
 .display-none {
     display: none;
