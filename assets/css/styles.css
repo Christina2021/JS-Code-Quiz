@@ -1,3 +1,10 @@
 /* Test to make sure linked properly; confirmed linked to both htmls; remove this line once we have CSS content that is still working */
 
 /* Styles to be added */
+
+
+/* need to make a style for wrong answers */
+
+.display-none {
+    display: none;
+}
