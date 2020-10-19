@@ -11,8 +11,6 @@
 
 //show as list
 
-//button to go back to start
-
 //button to clear highscores and localSession
 
 

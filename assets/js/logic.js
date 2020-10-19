@@ -9,6 +9,7 @@
 function startQuiz() {
     document.querySelector('#start-page').classList.add('display-none')
     document.querySelector('#questions').classList.remove('display-none')
+    timerGo();
 }
 
 

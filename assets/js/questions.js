@@ -81,6 +81,8 @@ const questList = [
 //display question (function)
 let questionNum = 0;
 let score = 0;
+let seconds = 90;
+let myTimer;
 
 document.querySelector('#question').innerHTML = questList[questionNum].question;
 document.querySelector('#answer1').innerHTML = questList[questionNum].answer1[0];
@@ -121,6 +123,7 @@ console.log(userAns[1]);
 //5 seconds taken off the timer
 if (userAns[1] === 'wrong'){
     console.log("this is working")
+    seconds -= 5;
     return;
 }
 
@@ -143,6 +146,8 @@ document.querySelector('#answer4').innerHTML = questList[questionNum].answer4[0]
 }
 
 function gameOver(){
+    clearInterval(myTimer);
+    document.querySelector('#timer').innerHTML = `Timer: --`
     console.log("game over");
     document.querySelector('#score').innerHTML = `Your score is ${score} points!`;
     console.log(score);
@@ -166,6 +171,18 @@ subAns4.addEventListener('click',displayQuestion);
 
 
 //timer starts immediately; counts down from 90
+function timerGo() {
+    console.log('test worked! write timer code in.');
+    myTimer = setInterval(function() {
+        seconds--;
+        console.log(seconds);
+        document.querySelector('#timer').innerHTML = `Timer: ${seconds}`;
+        if(seconds === 0){
+            gameOver();
+        }
+    },1000);
+};
+
 
 //maybe disable radio button so they don't keep clicking on the wrong answer?
 
