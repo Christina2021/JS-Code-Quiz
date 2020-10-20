@@ -34,5 +34,9 @@ Once they enter in their initials, they will be directed to a page with the scor
 ## What I Learned 💭
 I have learned a lot more about JavaScript through coding this quiz.  When creating this site, I had to become familiar and comfortable with the JavaScript event listeners as well as the local storage.  I had been able to learn much about these features by utilizing console.log for every step that I took to check the functionality of buttons being clicked on.  I have also learned much about utilizing the browser's local storage with to how to add to the local storage as well as how to retrieve the items from the local storage.  I also became familiar with using and adding switch statements into JavaScript.
 
+## Acknowledgements
+
+My awesome study group! You all always give me inspiration and support throughout!
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/#)
