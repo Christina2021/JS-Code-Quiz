@@ -221,21 +221,34 @@ function timerGo() {
 submitButton.addEventListener('click',function(e){
     e.preventDefault();
     userInit = document.querySelector('#initials').value;
-    //Put the user's information into an object
-    scoreObj = {name: userInit, score: score};
-    //Get previous user's initials/scores from localStorage and parse
-    scoreBoard = JSON.parse(localStorage.getItem("currentScoreBoard"));
-    //If nothing is currently in localStorage
-    if(!scoreBoard){
-        //have Scoreboard be an empty array
-        scoreBoard = [];
-        //Add the new object
-        scoreBoard[0] = scoreObj;
+    //If user does not enter anything
+    if(!userInit) {
+        const confirmNoScore = confirm("Are you sure you do not want to enter in your score to the scoreboard?");
+        //Confirm if user is sure they do not want to record their score
+        if(confirmNoScore){
+            alert("Your score will not be added to the scoreboard.");
+            location.href = "highscores.html";
+            return;
+        } else {
+            return;
+        };
     } else {
-        //Add the new object into the existing array
-        scoreBoard.push(scoreObj);
+        //Put the user's information into an object
+        scoreObj = {name: userInit, score: score};
+        //Get previous user's initials/scores from localStorage and parse
+        scoreBoard = JSON.parse(localStorage.getItem("currentScoreBoard"));
+        //If nothing is currently in localStorage
+        if(!scoreBoard){
+            //have Scoreboard be an empty array
+            scoreBoard = [];
+            //Add the new object
+            scoreBoard[0] = scoreObj;
+        } else {
+            //Add the new object into the existing array
+            scoreBoard.push(scoreObj);
+        };
+        //Convert object into a string
+        localStorage.setItem("currentScoreBoard",JSON.stringify(scoreBoard));
+        location.href = "highscores.html";
     };
-    //Convert object into a string
-    localStorage.setItem("currentScoreBoard",JSON.stringify(scoreBoard));
-    location.href = "highscores.html";
 });
