@@ -10,7 +10,7 @@
 
 This timed code quiz was created using HTML, CSS, Bootstrap, and JavaScript.  Once the user clicks the start button, they will be presented with a series of 10 questions based on JavaScript fundamentals that must be answered within 90 seconds.  The user will be penalized 5 seconds every time they click on a wrong answer.  Once they reach the end of the quiz, they may enter in their name/initials to be added to the scoreboard.  The scoreboard will be stored within the user's localStorage, which will stay stored until the user decides to either clear the scoreboard on this quiz site, or if they delete it from their browser's settings. 
 
-Please click [here](https://christina2021.github.io/JS-Code-Quiz//) to start the quiz! 
+Please click [here](https://christina2021.github.io/JS-Code-Quiz/) to start the quiz! 
 
 ## Usage
 
