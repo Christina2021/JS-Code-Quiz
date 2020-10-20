@@ -127,6 +127,7 @@ console.log(userAns[1]);
 //5 seconds taken off the timer
 if (userAns[1] === 'wrong'){
     console.log("this is working")
+    document.querySelector('#wrong').classList.remove('display-none')
     seconds -= 5;
     return;
 }
@@ -135,15 +136,23 @@ if (userAns[1] === 'wrong'){
 
 //if right do this
 else {
+    document.querySelector('#correct').classList.remove('display-none')
+    document.querySelector('#wrong').classList.add('display-none')
     score += 10;
+
     if(questionNum < 9) {
-questionNum++;    
-document.querySelector('#question').innerHTML = questList[questionNum].question;
-document.querySelector('#answer1').innerHTML = questList[questionNum].answer1[0];
-document.querySelector('#answer2').innerHTML = questList[questionNum].answer2[0];
-document.querySelector('#answer3').innerHTML = questList[questionNum].answer3[0];
-document.querySelector('#answer4').innerHTML = questList[questionNum].answer4[0];
+        //let's correct display for half a second before moving to the next question
+        setTimeout(function() {
+            questionNum++;    
+            document.querySelector('#question').innerHTML = questList[questionNum].question;
+            document.querySelector('#answer1').innerHTML = questList[questionNum].answer1[0];
+            document.querySelector('#answer2').innerHTML = questList[questionNum].answer2[0];
+            document.querySelector('#answer3').innerHTML = questList[questionNum].answer3[0];
+            document.querySelector('#answer4').innerHTML = questList[questionNum].answer4[0];
+            document.querySelector('#correct').classList.add('display-none')
+        },750)
     } else {  //questionNum === 9
+        document.querySelector('#correct').classList.add('display-none')
         gameOver();
     } 
 }
