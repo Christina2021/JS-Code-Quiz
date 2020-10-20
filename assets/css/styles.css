@@ -1,11 +1,6 @@
-/* Test to make sure linked properly; confirmed linked to both htmls; remove this line once we have CSS content that is still working */
 
-/* Styles to be added */
-
-
-/* need to make a style for wrong answers */
+/* Style for all html files */
 body {
-    /* background-color: turquoise; */
     background-image: url("../images/background-1.jpg");
     width: 100%;
     font-family: 'Montserrat', sans-serif;
@@ -17,11 +12,17 @@ main {
 h1 {
     font-weight: 700;
 }
+h2 {
+    font-weight: 600;
+}
 
 /* To change between the HTML sections on index.html */
 .display-none {
     display: none;
 }
+
+
+/* Timer- will display during Start Quiz and Quiz Questions portions */
 #timer {
     text-align: right;
     font-weight: 500;
@@ -33,14 +34,10 @@ h1 {
     text-align: center;
 }
 
-
 /* Quiz Page */
 .answer-button {
     margin: 0.25%;
 }
-
-
-/* Submit Score Page */
 
 
 /* Scoreboard Page */

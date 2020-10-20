@@ -1,7 +1,5 @@
 //Linked to index.html
 
-// alert("We are linked");  confirmed link; remove once JS content entered
-
 //This file will be used for the questions
 
 //Create an array with objects; must include JS questions and answers; put answers in an array with the answer and if it's wrong or correct
@@ -29,10 +27,10 @@ const questList = [
     },
     {
         question: 'Which option below can be used to access an HTML element?',
-        answer1: ['getElem()', 'wrong'],
-        answer2: ['getElementByClass', 'wrong'],
-        answer3: ['querySelect()', 'wrong'],
-        answer4: ['getElementById()', 'correct']
+        answer1: ['getElem( )', 'wrong'],
+        answer2: ['queryByClass( )', 'wrong'],
+        answer3: ['querySelect( )', 'wrong'],
+        answer4: ['getElementById( )', 'correct']
     },
     {
         question: 'When will data in Local Storage no longer show?',
@@ -78,32 +76,47 @@ const questList = [
     }
 ];
 
-//display question (function)
-let questionNum = 0;
-let score = 0;
-let seconds = 90;
-let myTimer;
-let userInit;
-let scoreBoard = [];
-let scoreObj;
-let timerOut;
+//Query Selector Variables
+//Question header and Answer buttons
+const currentQuestion = document.querySelector('#question');
+const currentAnswer1 = document.querySelector('#answer1');
+const currentAnswer2 = document.querySelector('#answer2');
+const currentAnswer3 = document.querySelector('#answer3');
+const currentAnswer4 = document.querySelector('#answer4');
+//Correct and Wrong display messages
+const wrongMessage = document.querySelector('#wrong');
+const correctMessage = document.querySelector('#correct');
+//Submit button after quiz
+const submitButton = document.querySelector('#submit-score');
+
+//Define variables
+let questionNum = 0;    //For question number
+let score = 0;          //For user's score
+let seconds = 90;       //For timer's seconds
+let myTimer;            //For timer as a whole
+let userInit;           //For user's initials submission
+let scoreBoard = [];    //Array for scoreboard of total users/scores
+let scoreObj;           //Objects to add to scoreboard
+let timerOut;           //For if seconds reach 0
 
 
-document.querySelector('#question').innerHTML = questList[questionNum].question;
-document.querySelector('#answer1').innerHTML = questList[questionNum].answer1[0];
-document.querySelector('#answer2').innerHTML = questList[questionNum].answer2[0];
-document.querySelector('#answer3').innerHTML = questList[questionNum].answer3[0];
-document.querySelector('#answer4').innerHTML = questList[questionNum].answer4[0];
+//Initial question to display
+currentQuestion.innerHTML = questList[questionNum].question;
+currentAnswer1.innerHTML = questList[questionNum].answer1[0];
+currentAnswer2.innerHTML = questList[questionNum].answer2[0];
+currentAnswer3.innerHTML = questList[questionNum].answer3[0];
+currentAnswer4.innerHTML = questList[questionNum].answer4[0];
 
 
+//Defined function for when an answer button is clicked on
 function displayQuestion(event) {
     event.preventDefault();
-    //grabs id of button that was clicked on
-    var userAnsId = event.target.getAttribute("id");
-    console.log(userAnsId);
+    //grabs id of button that was clicked on to target the specific button
+    let userAnsId = event.target.getAttribute("id");
+    //to store which button the user clicked on
+    let userAns;
 
-    var userAns;
-
+    //Determines the answer button the user clicked on based on the button id, and sets it to whether it was correct or wrong
     switch (userAnsId) {
         case 'answer1': 
             userAns = questList[questionNum].answer1;
@@ -118,53 +131,63 @@ function displayQuestion(event) {
             userAns = questList[questionNum].answer4;
             break;
         default:
-            console.log('Issue with userAnsId')
+            console.log('Issue with userAnsId') //default used for debugging purposes
     }
 
-    console.log(userAns);
-    console.log(userAns[1]);
 
-    //if wrong do this
-    //5 seconds taken off the timer
+    //if the user answered wrong, display wrong message and take off 5 seconds from timer
     if (userAns[1] === 'wrong'){
-        console.log("this is working")
-        document.querySelector('#wrong').classList.remove('display-none')
+        wrongMessage.classList.remove('display-none')
         seconds -= 5;
         return;
     }
 
 
-
     //if right do this
     else {
-        document.querySelector('#correct').classList.remove('display-none')
-        document.querySelector('#wrong').classList.add('display-none')
+        correctMessage.classList.remove('display-none');
+        wrongMessage.classList.add('display-none');
         score += 10;
 
-        if(questionNum < 9) {
-            //let's correct display for half a second before moving to the next question
-            setTimeout(function() {
-                questionNum++;    
-                document.querySelector('#question').innerHTML = questList[questionNum].question;
-                document.querySelector('#answer1').innerHTML = questList[questionNum].answer1[0];
-                document.querySelector('#answer2').innerHTML = questList[questionNum].answer2[0];
-                document.querySelector('#answer3').innerHTML = questList[questionNum].answer3[0];
-                document.querySelector('#answer4').innerHTML = questList[questionNum].answer4[0];
-                document.querySelector('#correct').classList.add('display-none')
-            },750)
-        } else {  //questionNum === 9
-            document.querySelector('#correct').classList.add('display-none')
-            gameOver();
-        } 
-    }
-}
+        //If correct, prevents user from clicking on answer buttons until next answer appears
+        currentAnswer1.setAttribute("disabled","true");
+        currentAnswer2.setAttribute("disabled","true");
+        currentAnswer3.setAttribute("disabled","true");
+        currentAnswer4.setAttribute("disabled","true");
 
+
+        if(questionNum < 9) {
+            //let's correct display for half a second before moving to the next question            
+            setTimeout(function() {
+                //Goes to next question, removes "correct" message
+                questionNum++;    
+                currentQuestion.innerHTML = questList[questionNum].question;
+                currentAnswer1.innerHTML = questList[questionNum].answer1[0];
+                currentAnswer2.innerHTML = questList[questionNum].answer2[0];
+                currentAnswer3.innerHTML = questList[questionNum].answer3[0];
+                currentAnswer4.innerHTML = questList[questionNum].answer4[0];
+                correctMessage.classList.add('display-none')
+                //Removes disabled attribute from buttons so user can select answer on next question
+                currentAnswer1.removeAttribute("disabled");
+                currentAnswer2.removeAttribute("disabled");
+                currentAnswer3.removeAttribute("disabled");
+                currentAnswer4.removeAttribute("disabled");
+            },750);
+        } else {  //questionNum === 9
+            //displays correct message briefly before going to gameOver function
+            setTimeout(function() {
+            correctMessage.classList.add('display-none')
+            gameOver();
+            },750);
+        };
+    };
+};
+
+//When timer runs out or user answers all questions
 function gameOver(){
     clearInterval(myTimer);
     document.querySelector('#timer').innerHTML = `Timer: --`
-    console.log("game over");
     document.querySelector('#score').innerHTML = `Your score is ${score} points!`;
-    console.log(score);
     document.querySelector('#questions').classList.add('display-none')
     document.querySelector('#enter-initials').classList.remove('display-none')
     if (timerOut){
@@ -174,27 +197,19 @@ function gameOver(){
     };
 }
 
-const subAns1 = document.querySelector('#answer1');
-const subAns2 = document.querySelector('#answer2');
-const subAns3 = document.querySelector('#answer3');
-const subAns4 = document.querySelector('#answer4');
-subAns1.addEventListener('click',displayQuestion);
-subAns2.addEventListener('click',displayQuestion);
-subAns3.addEventListener('click',displayQuestion);
-subAns4.addEventListener('click',displayQuestion);
+//Button Click Events
+currentAnswer1.addEventListener('click',displayQuestion);
+currentAnswer2.addEventListener('click',displayQuestion);
+currentAnswer3.addEventListener('click',displayQuestion);
+currentAnswer4.addEventListener('click',displayQuestion);
 
 
-
-// document.querySelector('#submit-score')addEventListener('click',)
-
-
-//timer starts immediately; counts down from 90
+//timer starts immediately (from logic.js file); counts down from 90
 function timerGo() {
-    console.log('test worked! write timer code in.');
     myTimer = setInterval(function() {
         seconds--;
-        console.log(seconds);
         document.querySelector('#timer').innerHTML = `Timer: ${seconds}`;
+        //When timer reaches 0
         if(seconds <= 0){
             timerOut = true;
             gameOver();
@@ -202,37 +217,25 @@ function timerGo() {
     },1000);
 };
 
-
-document.querySelector('#submit-score').addEventListener('click',function(e){
+//To add to localStorage so that all users/scores display on scoreboard
+submitButton.addEventListener('click',function(e){
     e.preventDefault();
-    console.log("does this work");
     userInit = document.querySelector('#initials').value;
-    console.log(userInit);
+    //Put the user's information into an object
     scoreObj = {name: userInit, score: score};
+    //Get previous user's initials/scores from localStorage and parse
     scoreBoard = JSON.parse(localStorage.getItem("currentScoreBoard"));
+    //If nothing is currently in localStorage
     if(!scoreBoard){
+        //have Scoreboard be an empty array
         scoreBoard = [];
+        //Add the new object
         scoreBoard[0] = scoreObj;
     } else {
+        //Add the new object into the existing array
         scoreBoard.push(scoreObj);
     };
+    //Convert object into a string
     localStorage.setItem("currentScoreBoard",JSON.stringify(scoreBoard));
     location.href = "highscores.html";
 });
-
-//maybe disable radio button so they don't keep clicking on the wrong answer?
-
-//if correct, will display correct for one second then move to next question
-
-//if timer reaches 0, display enter-initials and game-over section
-
-//if all questions are answered, display enter-initials and finished-quiz section
-
-//enter-initials section must show total score
-
-
-//Set object with initials and score total to localSession; add to it with values
-
-//after entering initials, go to highscores page
-//submit needs to have preventDefault
-
