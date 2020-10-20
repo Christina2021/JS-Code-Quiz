@@ -195,7 +195,12 @@ document.querySelector('#submit-score').addEventListener('click',function(e){
     console.log(userInit);
     scoreObj = {name: userInit, score: score};
     scoreBoard = JSON.parse(localStorage.getItem("currentScoreBoard"));
-    scoreBoard.push(scoreObj);
+    if(!scoreBoard){
+        scoreBoard = [];
+        scoreBoard[0] = scoreObj;
+    } else {
+        scoreBoard.push(scoreObj);
+    };
     localStorage.setItem("currentScoreBoard",JSON.stringify(scoreBoard));
     location.href = "highscores.html";
 });
