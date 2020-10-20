@@ -86,6 +86,7 @@ let myTimer;
 let userInit;
 let scoreBoard = [];
 let scoreObj;
+let timerOut;
 
 
 document.querySelector('#question').innerHTML = questList[questionNum].question;
@@ -96,66 +97,66 @@ document.querySelector('#answer4').innerHTML = questList[questionNum].answer4[0]
 
 
 function displayQuestion(event) {
-event.preventDefault();
-//grabs id of button that was clicked on
-var userAnsId = event.target.getAttribute("id");
-console.log(userAnsId);
+    event.preventDefault();
+    //grabs id of button that was clicked on
+    var userAnsId = event.target.getAttribute("id");
+    console.log(userAnsId);
 
-var userAns;
+    var userAns;
 
-switch (userAnsId) {
-    case 'answer1': 
-        userAns = questList[questionNum].answer1;
-        break;
-    case 'answer2':
-        userAns = questList[questionNum].answer2;
-        break;
-    case 'answer3':
-        userAns = questList[questionNum].answer3;
-        break;
-    case 'answer4':
-        userAns = questList[questionNum].answer4;
-        break;
-    default:
-        console.log('Issue with userAnsId')
-}
+    switch (userAnsId) {
+        case 'answer1': 
+            userAns = questList[questionNum].answer1;
+            break;
+        case 'answer2':
+            userAns = questList[questionNum].answer2;
+            break;
+        case 'answer3':
+            userAns = questList[questionNum].answer3;
+            break;
+        case 'answer4':
+            userAns = questList[questionNum].answer4;
+            break;
+        default:
+            console.log('Issue with userAnsId')
+    }
 
-console.log(userAns);
-console.log(userAns[1]);
+    console.log(userAns);
+    console.log(userAns[1]);
 
-//if wrong do this
-//5 seconds taken off the timer
-if (userAns[1] === 'wrong'){
-    console.log("this is working")
-    document.querySelector('#wrong').classList.remove('display-none')
-    seconds -= 5;
-    return;
-}
+    //if wrong do this
+    //5 seconds taken off the timer
+    if (userAns[1] === 'wrong'){
+        console.log("this is working")
+        document.querySelector('#wrong').classList.remove('display-none')
+        seconds -= 5;
+        return;
+    }
 
 
 
-//if right do this
-else {
-    document.querySelector('#correct').classList.remove('display-none')
-    document.querySelector('#wrong').classList.add('display-none')
-    score += 10;
+    //if right do this
+    else {
+        document.querySelector('#correct').classList.remove('display-none')
+        document.querySelector('#wrong').classList.add('display-none')
+        score += 10;
 
-    if(questionNum < 9) {
-        //let's correct display for half a second before moving to the next question
-        setTimeout(function() {
-            questionNum++;    
-            document.querySelector('#question').innerHTML = questList[questionNum].question;
-            document.querySelector('#answer1').innerHTML = questList[questionNum].answer1[0];
-            document.querySelector('#answer2').innerHTML = questList[questionNum].answer2[0];
-            document.querySelector('#answer3').innerHTML = questList[questionNum].answer3[0];
-            document.querySelector('#answer4').innerHTML = questList[questionNum].answer4[0];
+        if(questionNum < 9) {
+            //let's correct display for half a second before moving to the next question
+            setTimeout(function() {
+                questionNum++;    
+                document.querySelector('#question').innerHTML = questList[questionNum].question;
+                document.querySelector('#answer1').innerHTML = questList[questionNum].answer1[0];
+                document.querySelector('#answer2').innerHTML = questList[questionNum].answer2[0];
+                document.querySelector('#answer3').innerHTML = questList[questionNum].answer3[0];
+                document.querySelector('#answer4').innerHTML = questList[questionNum].answer4[0];
+                document.querySelector('#correct').classList.add('display-none')
+            },750)
+        } else {  //questionNum === 9
             document.querySelector('#correct').classList.add('display-none')
-        },750)
-    } else {  //questionNum === 9
-        document.querySelector('#correct').classList.add('display-none')
-        gameOver();
-    } 
-}
+            gameOver();
+        } 
+    }
 }
 
 function gameOver(){
@@ -166,7 +167,11 @@ function gameOver(){
     console.log(score);
     document.querySelector('#questions').classList.add('display-none')
     document.querySelector('#enter-initials').classList.remove('display-none')
-    document.querySelector('#finished-quiz').classList.remove('display-none')
+    if (timerOut){
+        document.querySelector('#time-ran-out').classList.remove('display-none')
+    } else {
+        document.querySelector('#finished-quiz').classList.remove('display-none')
+    };
 }
 
 const subAns1 = document.querySelector('#answer1');
@@ -191,6 +196,7 @@ function timerGo() {
         console.log(seconds);
         document.querySelector('#timer').innerHTML = `Timer: ${seconds}`;
         if(seconds <= 0){
+            timerOut = true;
             gameOver();
         }
     },1000);
