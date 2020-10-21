@@ -172,6 +172,15 @@ function displayQuestion(event) {
                 currentAnswer2.removeAttribute("disabled");
                 currentAnswer3.removeAttribute("disabled");
                 currentAnswer4.removeAttribute("disabled");
+                //Removes active class from button when clicked on
+                currentAnswer1.classList.remove('btn', 'btn-dark');
+                currentAnswer2.classList.remove('btn', 'btn-dark');
+                currentAnswer3.classList.remove('btn', 'btn-dark');
+                currentAnswer4.classList.remove('btn', 'btn-dark');
+                currentAnswer1.classList.add('btn', 'btn-dark');
+                currentAnswer2.classList.add('btn', 'btn-dark');
+                currentAnswer3.classList.add('btn', 'btn-dark');
+                currentAnswer4.classList.add('btn', 'btn-dark');
             },750);
         } else {  //questionNum === 9
             //displays correct message briefly before going to gameOver function
