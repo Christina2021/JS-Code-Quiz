@@ -83,6 +83,9 @@ const currentAnswer1 = document.querySelector('#answer1');
 const currentAnswer2 = document.querySelector('#answer2');
 const currentAnswer3 = document.querySelector('#answer3');
 const currentAnswer4 = document.querySelector('#answer4');
+//Condense currentAnswer buttons into an array
+const currentAnswers = [currentAnswer1, currentAnswer2, currentAnswer3, currentAnswer4];
+
 //Correct and Wrong display messages
 const wrongMessage = document.querySelector('#wrong');
 const correctMessage = document.querySelector('#correct');
@@ -150,14 +153,13 @@ function displayQuestion(event) {
         score += 10;
 
         //If correct, prevents user from clicking on answer buttons until next answer appears
-        currentAnswer1.setAttribute("disabled","true");
-        currentAnswer2.setAttribute("disabled","true");
-        currentAnswer3.setAttribute("disabled","true");
-        currentAnswer4.setAttribute("disabled","true");
+        currentAnswers.forEach(function(item) {
+            item.setAttribute("disabled","true");
+        });
 
 
         if(questionNum < 9) {
-            //let's correct display for half a second before moving to the next question            
+            //let's correct display for 3/4ths of a second before moving to the next question            
             setTimeout(function() {
                 //Goes to next question, removes "correct" message
                 questionNum++;    
@@ -167,20 +169,18 @@ function displayQuestion(event) {
                 currentAnswer3.innerHTML = questList[questionNum].answer3[0];
                 currentAnswer4.innerHTML = questList[questionNum].answer4[0];
                 correctMessage.classList.add('display-none')
-                //Removes disabled attribute from buttons so user can select answer on next question
-                currentAnswer1.removeAttribute("disabled");
-                currentAnswer2.removeAttribute("disabled");
-                currentAnswer3.removeAttribute("disabled");
-                currentAnswer4.removeAttribute("disabled");
-                //Removes active class from button when clicked on
-                currentAnswer1.classList.remove('btn', 'btn-dark');
-                currentAnswer2.classList.remove('btn', 'btn-dark');
-                currentAnswer3.classList.remove('btn', 'btn-dark');
-                currentAnswer4.classList.remove('btn', 'btn-dark');
-                currentAnswer1.classList.add('btn', 'btn-dark');
-                currentAnswer2.classList.add('btn', 'btn-dark');
-                currentAnswer3.classList.add('btn', 'btn-dark');
-                currentAnswer4.classList.add('btn', 'btn-dark');
+                //Removes disabled attribute from answer buttons so user can select answer on next question
+                currentAnswers.forEach(function(item) {
+                    item.removeAttribute("disabled");
+                });
+
+                //Removes active class from button when going to the next question
+                currentAnswers.forEach(function(item) {
+                    item.classList.remove('btn', 'btn-dark');
+                });
+                currentAnswers.forEach(function(item) {
+                    item.classList.add('btn', 'btn-dark');
+                });
             },750);
         } else {  //questionNum === 9
             //displays correct message briefly before going to gameOver function
@@ -204,13 +204,12 @@ function gameOver(){
     } else {
         document.querySelector('#finished-quiz').classList.remove('display-none')
     };
-}
+};
 
-//Button Click Events
-currentAnswer1.addEventListener('click',displayQuestion);
-currentAnswer2.addEventListener('click',displayQuestion);
-currentAnswer3.addEventListener('click',displayQuestion);
-currentAnswer4.addEventListener('click',displayQuestion);
+//Button Click Events for Answer Buttons
+currentAnswers.forEach(function(item) {
+    item.addEventListener('click',displayQuestion);
+});
 
 
 //timer starts immediately (from logic.js file); counts down from 90
